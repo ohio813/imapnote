@@ -4,6 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <TextView android:layout_width="wrap_content" android:text="LABEL" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/widget"></TextView>
-    <Button android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/loadWidget" android:text="Load" android:onClick="LoadButton"></Button>
+    <TextView android:layout_height="wrap_content" android:id="@+id/widget" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:text="TextView" android:layout_gravity="center" android:layout_marginTop="20dip"></TextView>
+    <Button android:text="Load" android:id="@+id/loadWidget" android:layout_height="wrap_content" android:onClick="LoadButton" android:layout_width="fill_parent" android:layout_marginTop="50dip"></Button>
+    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/usernameWidget" android:layout_marginTop="50dip">
+        <requestFocus></requestFocus>
+    </EditText>
+    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/passwordWidget"></EditText>
+    <Button android:layout_height="wrap_content" android:text="Save" android:id="@+id/saveWidget" android:layout_width="fill_parent" android:onClick="SaveButton"></Button>
+    <Button android:layout_height="wrap_content" android:text="Clear" android:id="@+id/clearWidget" android:layout_width="fill_parent" android:onClick="ClearButton" android:layout_marginTop="50dip"></Button>
 </LinearLayout>
