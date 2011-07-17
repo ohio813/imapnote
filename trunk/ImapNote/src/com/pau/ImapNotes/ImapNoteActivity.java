@@ -6,6 +6,8 @@ import com.pau.ImapNotes.Utils.ConfigurationFile;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
@@ -20,6 +22,8 @@ public class ImapNoteActivity extends Activity {
 	private final static int REFRESH_BUTTON = 0;
     private final static int LOGIN_BUTTON = 1;
     private final static int ADD_NOTE = 2;
+    
+    private final static int MENU_DELETE = 0;
 	
 	private ArrayAdapter<String> notesList;
     private BloccoNotes notesConteiner;
@@ -39,6 +43,7 @@ public class ImapNoteActivity extends Activity {
        
        ListView listWidget = (ListView)findViewById(R.id.notesListView);
        listWidget.setAdapter(this.notesList);
+       registerForContextMenu(listWidget);
        
        listWidget.setOnItemClickListener(
     		   new AdapterView.OnItemClickListener() {
@@ -93,5 +98,21 @@ public class ImapNoteActivity extends Activity {
 		
 	}
 	
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	    menu.setHeaderTitle("ImapNotes");
+		menu.add(0, ImapNoteActivity.MENU_DELETE, 0, "Delete note");
+	}
+	
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case ImapNoteActivity.MENU_DELETE:
+				AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+				if(this.notesConteiner.RemoveNote(info.position))
+					this.notesList.notifyDataSetChanged();
+				return true;
+		}
+		
+		return false;
+	}
 	
 }
