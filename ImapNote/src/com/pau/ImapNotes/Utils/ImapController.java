@@ -8,7 +8,8 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
 
-public class ImapController {
+
+public class ImapController{
 	private Session imapSession;
 	
 	public ImapController(){
@@ -17,13 +18,14 @@ public class ImapController {
 		this.imapSession = Session.getDefaultInstance(mailProperties, null);
 	
 	}
-	
-	public Message[] GetNotesFromServer(String username, String password) throws MessagingException{
-		Store account = this.imapSession.getStore("imaps");
-		account.connect("imap.gmail.com", username, password);
-		Folder notesFolder = account.getFolder("Notes");
-		notesFolder.open(Folder.READ_ONLY);
-		
-		return notesFolder.getMessages();
-	}
+
+	public Message[] GetImapMessagges(String username, String password) throws MessagingException{
+			Store account = this.imapSession.getStore("imaps");
+			account.connect("imap.gmail.com", username, password);
+			Folder notesFolder = account.getFolder("Notes");
+			notesFolder.open(Folder.READ_ONLY);
+			
+			return notesFolder.getMessages();
+		}
+
 }
