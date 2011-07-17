@@ -4,8 +4,6 @@ import com.pau.ImapNotes.Utils.BloccoNotes;
 import com.pau.ImapNotes.Utils.ConfigurationFile;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +19,7 @@ public class ImapNoteActivity extends Activity {
    
 	private final static int REFRESH_BUTTON = 0;
     private final static int LOGIN_BUTTON = 1;
+    private final static int ADD_NOTE = 2;
 	
 	private ArrayAdapter<String> notesList;
     private BloccoNotes notesConteiner;
@@ -68,9 +67,10 @@ public class ImapNoteActivity extends Activity {
      */
     
 	public boolean onCreateOptionsMenu(Menu menu){
-		menu.add(0, ImapNoteActivity.REFRESH_BUTTON, 0, "Refresh").setIcon(R.drawable.ic_menu_dice);
+		menu.add(0, ImapNoteActivity.ADD_NOTE, 0, "Add").setIcon(R.drawable.ic_menu_puzzle);
+		menu.add(0, ImapNoteActivity.REFRESH_BUTTON, 0, "Refresh").setIcon(R.drawable.ic_menu_wizard);
 		menu.add(0, ImapNoteActivity.LOGIN_BUTTON, 0, "Set user info").setIcon(R.drawable.ic_menu_barcode);
-
+		
 		return true;
 
 	}

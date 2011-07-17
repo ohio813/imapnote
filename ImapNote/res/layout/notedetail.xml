@@ -4,6 +4,6 @@
   android:orientation="vertical"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-    <TextView android:id="@+id/noteBodyWidget" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="fill_parent" android:layout_height="fill_parent"></TextView>
+    <TextView android:layout_width="fill_parent" android:id="@+id/noteBodyWidget" android:text="TextView" android:layout_height="fill_parent"></TextView>
     
 </LinearLayout>
