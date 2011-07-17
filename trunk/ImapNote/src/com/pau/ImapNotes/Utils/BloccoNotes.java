@@ -3,6 +3,7 @@ package com.pau.ImapNotes.Utils;
 import java.util.Vector;
 import javax.mail.Message;
 
+import android.app.ProgressDialog;
 import android.util.Log;
 
 public class BloccoNotes {
@@ -26,14 +27,14 @@ public class BloccoNotes {
 		
 	}
 	
-	public boolean RefreshTitleList(){		
+	public boolean RefreshTitleList(){			
 		this.notesTitle.removeAllElements();
 		this.notes.removeAllElements();
 		
 		Message[] list;
 		
 		try {
-			list = this.imapBridge.GetNotesFromServer(this.configurations.GetUsername(), this.configurations.GetPassword());
+			list = this.imapBridge.GetImapMessagges(this.configurations.GetUsername(), this.configurations.GetPassword());
 			for (Message refreshedNote : list){
 				this.notesTitle.add(refreshedNote.getSubject());
 				this.notes.add((String)refreshedNote.getContent());
