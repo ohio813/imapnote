@@ -2,8 +2,7 @@ package com.pau.ImapNotes.Utils;
 
 import java.util.Vector;
 import javax.mail.Message;
-
-import android.app.ProgressDialog;
+import android.text.Html;
 import android.util.Log;
 
 public class BloccoNotes {
@@ -35,9 +34,10 @@ public class BloccoNotes {
 		
 		try {
 			list = this.imapBridge.GetImapMessagges(this.configurations.GetUsername(), this.configurations.GetPassword());
-			for (Message refreshedNote : list){
-				this.notesTitle.add(refreshedNote.getSubject());
-				this.notes.add((String)refreshedNote.getContent());
+			for (int index=list.length-1; index>=0; index--){
+				this.notesTitle.add(list[index].getSubject());
+				String htmlBody = (String)list[index].getContent();
+				this.notes.add(Html.fromHtml(htmlBody).toString());
 			}
 			this.configurations.SaveConfigurationToXML();
 		} catch (Exception e) {
