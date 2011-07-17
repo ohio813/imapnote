@@ -26,6 +26,20 @@ public class BloccoNotes {
 		
 	}
 	
+	public boolean RemoveNote(int item){
+		this.notesTitle.remove(item);
+		this.notes.remove(item);
+		
+		try {
+			this.configurations.SaveConfigurationToXML();
+		} catch (Exception e) {
+			Log.v("ImapNote", e.getMessage());
+			return false;
+		}
+		
+		return true;
+	}
+	
 	public boolean RefreshTitleList(){			
 		this.notesTitle.removeAllElements();
 		this.notes.removeAllElements();
