@@ -33,8 +33,8 @@ public class Imaper {
 		Message[] notesMessages = notesFolder.getMessages();
 		
 		notesList.clear();
-		for(Message m : notesMessages){
-			OneNote aNote = new OneNote(m.getSubject(), ((String)m.getContent()), m.getReceivedDate().toLocaleString());
+		for(int index=notesMessages.length-1; index>=0; index--){
+			OneNote aNote = new OneNote(notesMessages[index].getSubject(), ((String)notesMessages[index].getContent()), notesMessages[index].getReceivedDate().toLocaleString());
 			notesList.add(aNote);
 		}
 		

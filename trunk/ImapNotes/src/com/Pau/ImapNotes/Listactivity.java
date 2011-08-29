@@ -75,7 +75,7 @@ public class Listactivity extends Activity {
 		protected Boolean doInBackground(Object... stuffs) {
 			this.adapter = ((SimpleAdapter)stuffs[3]);
 			try {
-				if(((Imaper)stuffs[0]).IsConnected())
+				if(!((Imaper)stuffs[0]).IsConnected())
 					((Imaper)stuffs[0]).ConnectToProvider(((ConfigurationFile)stuffs[1]).GetUsername(), ((ConfigurationFile)stuffs[1]).GetPassword());
 				((Imaper)stuffs[0]).GetNotes((ArrayList<OneNote>)stuffs[2]);
 		    	return true;
