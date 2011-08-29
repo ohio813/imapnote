@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.Pau.ImapNotes.Data.ConfigurationFile;
+import com.Pau.ImapNotes.Miscs.Imaper;
 import com.Pau.ImapNotes.Miscs.OneNote;
 
 import android.app.Activity;
@@ -17,11 +18,12 @@ import android.widget.ListView;
 
 public class Listactivity extends Activity {
 	private static final int LOGIN_BUTTON = 0;
-	
+		
 	private ArrayList<OneNote> noteList;
 	private SimpleAdapter listToView;
 	
 	private ConfigurationFile settings;
+	private Imaper imapFolder;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -41,11 +43,13 @@ public class Listactivity extends Activity {
         this.settings = new ConfigurationFile(this.getApplicationContext());
         ((ImapNotes)this.getApplicationContext()).SetConfigurationFile(this.settings);
         
+        this.imapFolder = new Imaper();
+        ((ImapNotes)this.getApplicationContext()).SetImaper(this.imapFolder);
+        
         if (this.settings.GetUsername()==null && this.settings.GetPassword()==null){
-        	Intent goToAccountConfiguration = new Intent(this, AccontConfigurationActivity.class);
-            startActivity(goToAccountConfiguration);
+        	this.AccountLoader();
+        
         }
-        	
                 
     }
     
@@ -64,6 +68,12 @@ public class Listactivity extends Activity {
 
     }
     
+    private void AccountLoader(){
+    	Intent goToAccountConfiguration = new Intent(this, AccontConfigurationActivity.class);
+        startActivity(goToAccountConfiguration);
+        
+    }
+    
     /***************************************************/
     public boolean onCreateOptionsMenu(Menu menu){
         menu.add(0, Listactivity.LOGIN_BUTTON, 0, "Account");
@@ -75,10 +85,8 @@ public class Listactivity extends Activity {
     
     public boolean onOptionsItemSelected (MenuItem item){
         switch (item.getItemId()){
-                
         	case Listactivity.LOGIN_BUTTON:
-        		Intent goToAccountConfiguration = new Intent(this, AccontConfigurationActivity.class);
-                startActivity(goToAccountConfiguration);
+        		this.AccountLoader();
                 return true;
                     
         }
