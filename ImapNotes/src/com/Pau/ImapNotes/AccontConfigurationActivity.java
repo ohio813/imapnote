@@ -5,13 +5,14 @@ import com.Pau.ImapNotes.Miscs.Imaper;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AccontConfigurationActivity extends Activity {
+	public static final int TO_REFRESH = 999;
 	
 	private ConfigurationFile settings;
 	private Imaper imapFolder;
@@ -35,24 +36,35 @@ public class AccontConfigurationActivity extends Activity {
 	
 	}
 	
-	public void DoLogin(View v){
+	public void DoLogin(View v) {
 		ProgressDialog loadingDialog = ProgressDialog.show(this, "ImapNotes" , "Logging in to your Gmail account... ", true);
 
 		this.settings.SetUsername(this.usernameTextView.getText().toString());
 		this.settings.SetPassword(this.passwordTextView.getText().toString());
 		
-        try {
-			this.imapFolder.ConnectToProvider(this.settings.GetUsername(), this.settings.GetPassword());
-			Toast.makeText(this, "Connected!", Toast.LENGTH_SHORT).show();
-			this.settings.SaveConfigurationToXML();
-			this.finish();
-        } catch (Exception e) {
-			Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-			Log.v("ImapNotes", e.getMessage());
-		} finally {
-			loadingDialog.dismiss();
+		new LoginThread().execute(this.imapFolder, this.settings, loadingDialog, this);
+		
+	}
+	
+	class LoginThread extends AsyncTask<Object, Void, Boolean>{
+		
+		protected Boolean doInBackground(Object... stuffs) {			
+			try {
+				((Imaper)stuffs[0]).ConnectToProvider(((ConfigurationFile)stuffs[1]).GetUsername(), ((ConfigurationFile)stuffs[1]).GetPassword());
+				((ConfigurationFile)stuffs[1]).SaveConfigurationToXML();
+				((AccontConfigurationActivity)stuffs[3]).setResult(AccontConfigurationActivity.TO_REFRESH);
+				((AccontConfigurationActivity)stuffs[3]).finish();
+				return true;
+	        } catch (Exception e) {
+				Log.v("ImapNotes", e.getMessage());
+			} finally {
+				((ProgressDialog)stuffs[2]).dismiss();
+			}
+			
+			return false;
 		}
-				
+		
 	}
 	
 }
+
