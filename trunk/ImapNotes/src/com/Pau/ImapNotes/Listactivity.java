@@ -113,7 +113,10 @@ public class Listactivity extends Activity {
                 startActivityForResult(new Intent(this, AccontConfigurationActivity.class), Listactivity.LOGIN_BUTTON);
                 return true;
         	case Listactivity.REFRESH_BUTTON:
-        		this.RefreshList();
+        		if(this.settings.GetUsername()==null && this.settings.GetPassword()==null)
+                    startActivityForResult(new Intent(this, AccontConfigurationActivity.class), Listactivity.LOGIN_BUTTON);
+        		else
+        			this.RefreshList();
         		return true;
                     
         }
