@@ -2,6 +2,7 @@ package com.Pau.ImapNotes;
 
 import java.util.ArrayList;
 import com.Pau.ImapNotes.Data.ConfigurationFile;
+import com.Pau.ImapNotes.Data.NotesDb;
 import com.Pau.ImapNotes.Miscs.Imaper;
 import com.Pau.ImapNotes.Miscs.OneNote;
 
@@ -26,6 +27,7 @@ public class Listactivity extends Activity {
 	
 	private ConfigurationFile settings;
 	private Imaper imapFolder;
+	private NotesDb storedNotes;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -48,9 +50,16 @@ public class Listactivity extends Activity {
         this.imapFolder = new Imaper();
         ((ImapNotes)this.getApplicationContext()).SetImaper(this.imapFolder);
         
+        this.storedNotes = new NotesDb(this.getApplicationContext());
+        
         if (this.settings.GetUsername()==null && this.settings.GetPassword()==null){
             startActivityForResult(new Intent(this, AccontConfigurationActivity.class), Listactivity.LOGIN_BUTTON);
         
+        } else {
+        	this.storedNotes.OpenDb();
+        	this.storedNotes.GetStoredNotes(this.noteList);
+        	this.listToView.notifyDataSetChanged();
+        	this.storedNotes.CloseDb();
         }
                 
     }
@@ -64,20 +73,25 @@ public class Listactivity extends Activity {
     public void RefreshList(){
 		ProgressDialog loadingDialog = ProgressDialog.show(this, "ImapNotes" , "Refreshing notes list... ", true);
 
-		new RefreshThread().execute(this.imapFolder, this.settings, this.noteList, this.listToView, loadingDialog);
+		new RefreshThread().execute(this.imapFolder, this.settings, this.noteList, this.listToView, loadingDialog, this.storedNotes);
 
     }
     
     class RefreshThread extends AsyncTask<Object, Void, Boolean>{
     	SimpleAdapter adapter;
+    	ArrayList<OneNote> notesList;
+    	NotesDb storedNotes;
     	
 		@Override
 		protected Boolean doInBackground(Object... stuffs) {
 			this.adapter = ((SimpleAdapter)stuffs[3]);
+			this.notesList = ((ArrayList<OneNote>)stuffs[2]);
+			this.storedNotes = ((NotesDb)stuffs[5]);
+	
 			try {
 				if(!((Imaper)stuffs[0]).IsConnected())
 					((Imaper)stuffs[0]).ConnectToProvider(((ConfigurationFile)stuffs[1]).GetUsername(), ((ConfigurationFile)stuffs[1]).GetPassword());
-				((Imaper)stuffs[0]).GetNotes((ArrayList<OneNote>)stuffs[2]);
+				((Imaper)stuffs[0]).GetNotes(this.notesList);
 		    	return true;
 			} catch (Exception e) {
 				Log.v("ImapNotes", e.getMessage());
@@ -90,9 +104,15 @@ public class Listactivity extends Activity {
 		}
 		
 		protected void onPostExecute(Boolean result){
-			if(result)
+			if(result){
+				this.storedNotes.OpenDb();
+				this.storedNotes.ClearDb();
+				for(OneNote n : this.notesList)
+					this.storedNotes.InsertANote(n);
+				this.storedNotes.CloseDb();
+						
 				this.adapter.notifyDataSetChanged();
-			
+			}
 		}
     	
     }
