@@ -22,6 +22,22 @@ public class OneNote extends HashMap<String,String>{
 		this.put("title", title);
 		this.put("body", body);
 		this.put("date", date);
+	
+	}
+	
+	public String GetTitle(){
+		return this.get("title");
+		
+	}
+	
+	public String GetBody(){
+		return this.get("body");
+		
+	}
+	
+	public String GetDate(){
+		return this.get("date");
+		
 	}
 	
 }
