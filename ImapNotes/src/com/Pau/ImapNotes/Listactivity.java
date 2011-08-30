@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
 
@@ -61,6 +63,12 @@ public class Listactivity extends Activity {
         	this.listToView.notifyDataSetChanged();
         	this.storedNotes.CloseDb();
         }
+        
+        ((ListView)findViewById(R.id.notesList)).setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View widget, int selectedNote, long arg3) {
+				startActivity(new Intent(widget.getContext(), NoteDetailActivity.class));
+			}
+          });
                 
     }
     
