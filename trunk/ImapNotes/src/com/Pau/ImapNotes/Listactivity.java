@@ -38,6 +38,7 @@ public class Listactivity extends Activity {
         setContentView(R.layout.main);
         
         this.noteList = new ArrayList<OneNote>();
+        ((ImapNotes)this.getApplicationContext()).SetNotesList(this.noteList);
         this.listToView = new SimpleAdapter(
         		getApplicationContext(),
                 this.noteList,
@@ -66,7 +67,9 @@ public class Listactivity extends Activity {
         
         ((ListView)findViewById(R.id.notesList)).setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View widget, int selectedNote, long arg3) {
-				startActivity(new Intent(widget.getContext(), NoteDetailActivity.class));
+				Intent toDetail = new Intent(widget.getContext(), NoteDetailActivity.class);
+				toDetail.putExtra("selection", selectedNote);
+				startActivity(toDetail);
 			}
           });
                 

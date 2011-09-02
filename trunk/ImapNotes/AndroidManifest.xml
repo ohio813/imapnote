@@ -4,7 +4,19 @@
       android:versionCode="1"
       android:versionName="1.0">
     <uses-sdk android:minSdkVersion="7" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.READ_LOGS" />
+	<uses-permission android:name="android.permission.READ_CONTACTS" />
+	<uses-permission android:name="android.permission.WRITE_CONTACTS" />
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+	<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+	<uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+	<uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application android:icon="@drawable/icon" android:name="@string/app_name" android:label="@string/app_name" android:theme="@style/ImapNotesTheme">
         <activity android:name=".Listactivity" android:label="@string/app_name" android:screenOrientation="portrait">
@@ -16,6 +28,13 @@
         <activity android:name=".AccontConfigurationActivity" android:screenOrientation="portrait"></activity>
         
         <activity android:name=".NoteDetailActivity" android:screenOrientation="portrait"></activity>
-
+        
+        <service android:name="ImapNotesAuthenticationService" android:exported="true">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/authenticator" />
+        </service>
+        
     </application>
 </manifest>
