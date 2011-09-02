@@ -1,5 +1,7 @@
 package com.Pau.ImapNotes;
 
+import java.util.ArrayList;
+
 import com.Pau.ImapNotes.Data.ConfigurationFile;
 import com.Pau.ImapNotes.Miscs.Imaper;
 import com.Pau.ImapNotes.Miscs.OneNote;
@@ -10,7 +12,8 @@ public class ImapNotes extends Application {
 	
 	private ConfigurationFile thisSessionConfigurationFile;
 	private Imaper thisSessionImapFolder;
-	private OneNote selectedNote;
+	private ArrayList<OneNote> noteList;
+
 	
 	public void SetConfigurationFile(ConfigurationFile currentSettings){
 		this.thisSessionConfigurationFile = currentSettings;
@@ -32,13 +35,13 @@ public class ImapNotes extends Application {
 		
 	}
 	
-	public void SetSelectedNote(OneNote theNote){
-		this.selectedNote = theNote;
+	public void SetNotesList(ArrayList<OneNote> currentNotesList){
+		this.noteList = currentNotesList;
 		
 	}
 	
-	public OneNote GetSelectedNote(){
-		return this.selectedNote;
+	public ArrayList<OneNote> GetNotesList(){
+		return this.noteList;
 		
 	}
 

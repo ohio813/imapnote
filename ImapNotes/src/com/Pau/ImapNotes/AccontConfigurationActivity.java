@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.EditText;
 
 public class AccontConfigurationActivity extends Activity {
 	public static final int TO_REFRESH = 999;
@@ -30,19 +31,22 @@ public class AccontConfigurationActivity extends Activity {
         this.settings = ((ImapNotes)getApplicationContext()).GetConfigurationFile();
         this.imapFolder = ((ImapNotes)getApplicationContext()).GetImaper();
         
-        this.usernameTextView.setText(this.settings.GetUsername()==null ? "you@gmail.com" : this.settings.GetUsername());
-        this.passwordTextView.setText(this.settings.GetPassword()==null ? "your password" : this.settings.GetPassword());
+        this.usernameTextView.setText(this.settings.GetUsername());
+        this.passwordTextView.setText(this.settings.GetPassword());
         
 	
 	}
 	
 	public void DoLogin(View v) {
-		ProgressDialog loadingDialog = ProgressDialog.show(this, "ImapNotes" , "Logging in to your Gmail account... ", true);
-
-		this.settings.SetUsername(this.usernameTextView.getText().toString());
-		this.settings.SetPassword(this.passwordTextView.getText().toString());
+		if (!this.usernameTextView.getText().toString().endsWith("@gmail.com"))
+			((EditText)findViewById(R.id.usernameEdit)).setError("Insert also the domanin (eg. @gmail.com)");  
+		else {	
+			ProgressDialog loadingDialog = ProgressDialog.show(this, "ImapNotes" , "Logging in to your Gmail account... ", true);
+			this.settings.SetUsername(this.usernameTextView.getText().toString());
+			this.settings.SetPassword(this.passwordTextView.getText().toString());
 		
-		new LoginThread().execute(this.imapFolder, this.settings, loadingDialog, this);
+			new LoginThread().execute(this.imapFolder, this.settings, loadingDialog, this);
+		}
 		
 	}
 	
