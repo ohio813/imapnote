@@ -5,7 +5,7 @@
   android:layout_width="fill_parent" android:layout_height="fill_parent">
     <EditText android:layout_width="fill_parent" android:id="@+id/bodyView" 
     	android:inputType="textMultiLine" android:layout_height="fill_parent" 
-    	android:enabled="false" android:editable="false" android:gravity="top">
+    	android:enabled="false" android:gravity="top" android:focusableInTouchMode="false" android:onClick="BeginEditMode">
         <requestFocus></requestFocus>
     </EditText>
     
