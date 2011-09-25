@@ -68,7 +68,7 @@ public class Listactivity extends Activity {
         ((ListView)findViewById(R.id.notesList)).setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View widget, int selectedNote, long arg3) {
 				Intent toDetail = new Intent(widget.getContext(), NoteDetailActivity.class);
-				toDetail.putExtra("selection", selectedNote);
+				toDetail.putExtra("selectedNote", ((Listactivity)widget.getContext()).noteList.get(selectedNote));
 				startActivity(toDetail);
 			}
           });

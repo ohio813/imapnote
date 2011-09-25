@@ -18,7 +18,7 @@ public class NoteDetailActivity extends Activity{
         setContentView(R.layout.note_detail);
         
         //this.currentNote = getIntent().getIntExtra("selection", -1);
-        this.currentNote = ((ImapNotes)this.getApplicationContext()).GetNotesList().get(getIntent().getIntExtra("selection", -1));
+        this.currentNote = (OneNote)getIntent().getExtras().get("selectedNote");
 
         String plainText = Html.fromHtml(this.currentNote.GetBody()).toString();
        ((EditText)findViewById(R.id.bodyView)).setText(plainText);
