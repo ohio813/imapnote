@@ -6,5 +6,8 @@
 	<classpathentry kind="lib" path="/Users/pau/Documents/Workspace/ImapNotes/lib/activation.jar"/>
 	<classpathentry kind="lib" path="/Users/pau/Documents/Workspace/ImapNotes/lib/additionnal.jar"/>
 	<classpathentry kind="lib" path="/Users/pau/Documents/Workspace/ImapNotes/lib/mail.jar"/>
+	<classpathentry kind="lib" path="/home/pau/Workspace/ImapNotes/lib/activation.jar"/>
+	<classpathentry kind="lib" path="/home/pau/Workspace/ImapNotes/lib/additionnal.jar"/>
+	<classpathentry kind="lib" path="/home/pau/Workspace/ImapNotes/lib/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
